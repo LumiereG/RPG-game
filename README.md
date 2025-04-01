@@ -4,6 +4,11 @@
 
 This project is a simple, console-based RPG game where the player navigates through a dungeon, interacts with items, and faces enemies. The game incorporates various design patterns to manage game objects, item effects, and the dungeon generation system. The project utilizes the **Decorator**, **Singleton**, and **Builder** design patterns to provide flexibility and modularity.
 
+## Screenshot
+<p align="center">
+  <img src="screenshot.png" alt="RPG Game Screenshot">
+</p>
+
 ## **Game Features**
 
 1. **Dungeon Layout**:  
