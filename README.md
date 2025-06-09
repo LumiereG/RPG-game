@@ -9,97 +9,64 @@ This project is a simple, console-based RPG game where the player navigates thro
   <img src="screenshot.png" alt="RPG Game Screenshot">
 </p>
 
-## **Game Features**
+## **Features**
 
-1. **Dungeon Layout**:  
-   The game world consists of a 20x40 grid representing the dungeon. The grid can have:
-   - **Walls (`█`)** blocking movement,
-   - **Empty spaces (` `)** where the player can move,
-   - **Items** like weapons, potions, and currency (coins/gold),
-   - **Enemies** positioned throughout the dungeon.
-
-2. **Player Movement**:  
-   The player can move around using **WASD** keys, with restrictions:
-   - The player cannot move beyond the dungeon boundaries or through walls.
-   - The player starts at position **(0, 0)**.
-
-3. **Player Attributes and Inventory**:  
-   The player has several stats, including Strength, Dexterity, Health, Luck, Aggression, and Wisdom.  
-   The player has:
-   - **Two hands** to equip items (e.g., weapons),
-   - An **inventory** where they can store and manage items,
-   - **Currencies** like coins and gold.
-
-4. **Items**:  
-   The game includes predefined items, such as:
-   - **Weapons** with damage values (e.g., sword, bow),
-   - **Potions** with various effects,
-   - **Currency** like coins and gold.  
-   Items are placed within the dungeon, and when the player steps on an item, they can **pick it up** by pressing **E**.  
-   Items can have **effects**, such as modifying player stats (e.g., "Unlucky" decreases Luck, "Powerful" increases weapon damage). These effects are implemented using the **Decorator** pattern.
-
-5. **Dungeon Generation**:  
-   The dungeon is generated using different strategies, including:
-   - **Empty dungeon**: A grid with no walls.
-   - **Filled dungeon**: A grid filled entirely with walls.
-   - **Random paths and chambers**: Creating paths and random empty spaces.
-   - **Central room**: Adding a large central room in the dungeon.
-   - **Item placement**: Randomly placing items like weapons, potions, and enemies on non-wall cells.
-   
-   The **Builder Pattern** is used to allow for flexible and dynamic dungeon construction. Various strategies can be combined to create different types of dungeon layouts.
-
-6. **Game State Presentation**:  
-   The game state is rendered on the console and includes:
-   - A visual representation of the **dungeon**.
-   - The **player’s stats**, including equipped items.
-   - **Inventory** showing the items in the player's possession.
-   - Information about **nearby items** and **enemies** surrounding the player.
-   - **Last action** taken by the player.
-   
-   The **Singleton Pattern** ensures a single instance for rendering the game state, making it easy to manage and update the display consistently.
-
-7. **Item Effects with Decorators**:  
-   Items can be **decorated** with effects that modify their behavior. For example:
-   - Weapons can have an effect that increases damage.
-   - Potions can modify the player’s attributes (e.g., decrease luck).
-   
-   These effects are applied dynamically to items using the **Decorator Pattern**. This allows for easy expansion of item functionality in the future.
-
-8. **Inventory Management**:  
-   The player can:
-   - **Equip and unequip** items in both hands.
-   - **Drop** items from the inventory.
-   - Manage **two-handed weapons**, ensuring they are handled correctly when equipped or unequipped.
-
-9. **Rendering**:  
-   The game screen is updated continuously:
-   - The dungeon and player’s actions are redrawn.
-   - The player’s current stats and inventory are displayed beside the dungeon.
-   - Nearby items and enemies are shown.
-
-## **Design Patterns Used**
-
-1. **Decorator Pattern**:  
-   This pattern is used to add effects to items, such as modifying their attributes or adding bonuses. Each item can have multiple effects applied at runtime, and this functionality is crucial for enhancing gameplay with dynamic item behaviors.
-
-2. **Singleton Pattern**:  
-   The game rendering system uses the Singleton pattern to ensure there is only one instance responsible for displaying the game state. This centralizes control over the display and ensures consistency in the game’s visual output.
-
-3. **Builder Pattern**:  
-   The Builder pattern is utilized to create the dungeon and define its structure. It allows for combining various strategies (e.g., adding walls, paths, items) to generate different types of dungeons, making the system flexible and extensible.
-
-## **How to Play**
-
-1. **Movement**: Use **WASD** keys to move the player.
-2. **Pick up Items**: Step on an item and press **E** to pick it up.
-3. **Equip and Manage Inventory**: Equip items by selecting them from the inventory. Manage your two hands to equip one-handed and two-handed weapons.
-4. **Explore the Dungeon**: Navigate through the dungeon, interact with items, and face enemies.
+* **Dungeon Generation:** Dynamically creates game worlds using a flexible Builder pattern for various dungeon layouts (empty, filled, paths, chambers, central room) and item/enemy placement.
+* **Player & Character System:**
+    * Players navigate a `20x40` grid-based room, respecting boundaries and walls.
+    * Manages player attributes (Strength, Dexterity, Health, Luck, Aggression, Wisdom).
+    * Two-handed inventory system with item equipping/unequipping.
+* **Dynamic Item System:**
+    * Various item types including weapons (single and two-handed), currencies (coins, gold), and unusable items.
+    * **Decorator Pattern:** Items can be enhanced with multiple, stacking effects (e.g., "Unlucky," "Powerful") that modify item properties or player attributes.
+* **Combat System:**
+    * **Visitor Pattern:** Implements a flexible combat system allowing different weapon types (heavy, light, magic) and attack styles (normal, stealth, magic) to interact with enemies. Easily extensible for new weapons or attack methods.
+    * Enemies with customizable health, attack, and armor.
+* **Temporal Effects & Potions:**
+    * **Observer Pattern:** Potions provide temporary or permanent attribute boosts (e.g., "power potion," "luck potion") with turn-based duration tracking.
+    * Supports dynamic removal of effects (e.g., antidotes).
+* **Modular Control System:**
+    * **Chain of Responsibility Pattern:** Handles player input for movement, item interaction (pickup, drop, equip, use), and game exit.
+    * Dynamically adjusts available actions and prompts based on game context.
+* **Centralized Game State Presentation:**
+    * **Singleton Pattern:** A dedicated display system for rendering the dungeon, player status (inventory, equipped items, attributes, currency), nearby enemy information, and action logs to the console. Designed for easy extensibility to new display types.
+* **Multiplayer Capability:**
+    * **Model-View-Controller (MVC) Pattern:** Refactored architecture to support networked gameplay.
+    * **TCP/JSON Communication:** Enables client-server communication using `System.Text.Json` for game state synchronization.
+    * Supports up to 9 networked players.
+* **Dynamic Enemy AI:**
+    * **Strategy Pattern:** Implements various enemy behaviors (calm, aggressive, timid) that dictate movement and attack patterns. Allows for easy addition or real-time modification of enemy AI.
 
 ---
 
-## **Future Features**
+## **Technical Showcase**
 
-- **Combat System**: Add a system where the player fights enemies based on their equipped items and stats.
-- **Advanced Dungeon Layouts**: Implement more complex dungeon designs with traps, puzzles, and multi-level layouts.
-- **Enhanced Item Effects**: Introduce additional item modifiers that impact combat or player attributes.
+This project effectively demonstrates the application of key design patterns:
 
+* **Decorator:** For item modification and effects.
+* **Builder:** For dungeon generation and instruction display.
+* **Singleton:** For centralized game state presentation.
+* **Chain of Responsibility:** For robust keyboard input handling.
+* **Observer:** For managing temporal effects and potion durations.
+* **Visitor:** For flexible and extensible combat calculations.
+* **Model-View-Controller (MVC):** For separating game logic, presentation, and input handling, especially for multiplayer.
+* **Strategy:** For dynamic enemy AI behaviors.
+
+---
+
+## **How to Run**
+
+1.  Clone the repository: `git clone [your-repo-link]`
+2.  Navigate to the project directory.
+3.  Build the project: `dotnet build`
+4.  Run the game:
+    * **Server Mode:** `dotnet run --server [port, default 5555]`
+    * **Client Mode:** `dotnet run --client [ip:port, default 127.0.0.1:5555]`
+
+---
+
+## **Contributing**
+
+Feel free to open issues or submit pull requests.
+
+---
